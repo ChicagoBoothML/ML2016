@@ -17,7 +17,7 @@ title: BUS41204
 name: BUS41204
 email: mkolar@chicagobooth.edu
 description: Machine Learning
-baseurl: /ML2106
+baseurl: /ML2016
 url: chicagoboothml.github.io/
 twitter_username:
 github_username:
@@ -34,6 +34,7 @@ theme: minima
 
 gems:
   - jekyll-feed
+
 exclude:
   - Gemfile
   - Gemfile.lock
