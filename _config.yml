@@ -30,7 +30,6 @@ markdown: kramdown
 highlighter: rouge
 permalink: /ML2016/
 
-theme: minima
 gems:
   - jekyll-feed
 exclude:
