@@ -12,7 +12,7 @@ You can download R from [here](https://www.r-project.org/).
 - [Install R for Windows](https://www.youtube.com/watch?v=A56PD8BSS0A)
 - [Install R for Mac](https://www.youtube.com/watch?v=ICGkG7Gg6j0)
 
-At the time of creating this webpage, the current version of R is **version 3.2.4**.
+At the time of creating this webpage, the current version of R is **version 3.3.2**.
 
 _Note: If you have R already installed on your computer, please make sure that
 it is the latest version. Otherwise, you may encounter difficulties._
