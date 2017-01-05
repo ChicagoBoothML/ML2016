@@ -128,7 +128,7 @@ _Grades_ will be determined by:
 
 - homework -- 4 assignments (18%)
 
-    These assignments can be done in groups (max size 4). You should submit only one write-up per group. Homework assignments will be uploaded through [gradescope.com](https://gradescope.com/). The uploaded homework could be a scan of handwritten solution or a typed solution. Submission should have a clear and professional presentation.
+    These assignments can be done in groups (max size 5). You should submit only one write-up per group. Homework assignments will be uploaded through [gradescope.com](https://gradescope.com/). The uploaded homework could be a scan of handwritten solution or a typed solution. Submission should have a clear and professional presentation.
 
 - participation on Piazza (2%)
 
