@@ -6,6 +6,7 @@ layout: default
 
 **TAs**:
 
+  Siying Cao ([siyingc@uchicago.edu](mailto:siyingc@uchicago.edu))  
   Chaoxing Dai ([chaoxingdai@uchicago.edu](mailto:chaoxingdai@uchicago.edu))  
   Jingyu He ([jingyuhe@uchicago.edu](mailto:jingyuhe@uchicago.edu))  
 
