@@ -4,8 +4,6 @@ title: Tex Installation Note
 permalink: /tex/
 ---
 
-# **TeX**
-
 TeX is a typesetting system that enables the rendering of math equations in various types of documents.
 
 A TeX backend is required by R Markdown and iPython Notebook when converting those formats to PDF.
