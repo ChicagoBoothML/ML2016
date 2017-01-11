@@ -32,4 +32,4 @@ Optional textbook reading: An Introduction to Statistical Learning: Section 2, S
 [PDF](https://github.com/ChicagoBoothML/ML2016/raw/master/code/BostonHousing_KNN_BiasVarTradeOff_CrossValid.pdf)   
 [Instructions](../rmdnote) on how to convert the R Markdown document (Rmd file) into a PDF file.  
 
-[Assignement 1](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixrjtb35yp22ih) Due 11.59pm on Saturday, January 21
+[Assignement 1](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixskr9hgru7dn) Due 11.59pm on Saturday, January 21
