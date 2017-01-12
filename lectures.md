@@ -8,7 +8,7 @@ permalink: /lectures/
 | &nbsp;&nbsp;Week&nbsp;&nbsp;              | Content                                                        |  Deliverables Due |
 |:-------------------:|---------------------------------------------------------------|:------------------|
 | [1](#week-1)   | &nbsp;&nbsp;Nearest Neighbors <br>&nbsp;&nbsp;Bias-Variance Trade-Off <br> &nbsp;&nbsp;Cross-Validation   |                   |
-| [2](#week-2)   |  &nbsp;&nbsp; Classification and regression trees               |                   |
+| [2](#week-2)   | &nbsp;&nbsp;Classification and regression trees&nbsp;&nbsp;&nbsp;&nbsp;               |                   |
 | [3]()          |                                                                |  HW 1 due         |
 | [4]()          |                                                                |                   |
 | [5]()          |                                                                |  HW 2 due         |                 
