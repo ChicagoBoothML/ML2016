@@ -8,7 +8,7 @@ permalink: /lectures/
 | &nbsp;&nbsp;Week&nbsp;&nbsp;              | Content                                                        |  Deliverables Due |
 |:-------------------:|---------------------------------------------------------------|:------------------|
 | [1](#week-1)   | &nbsp;&nbsp;Nearest Neighbors <br>&nbsp;&nbsp;Bias-Variance Trade-Off <br> &nbsp;&nbsp;Cross-Validation   |                   |
-| [2]()          |                                                                |                   |
+| [2](#week-2)   |  &nbsp;&nbsp; Classification and regression trees               |                   |
 | [3]()          |                                                                |  HW 1 due         |
 | [4]()          |                                                                |                   |
 | [5]()          |                                                                |  HW 2 due         |                 
@@ -20,6 +20,13 @@ permalink: /lectures/
 | [11]()                 |  Project write-up due                                          | HW 4 due          |
 {: .mbtablestyle}
 
+
+## Week 2
+
+[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/p1b68bvqe6188717t01u5ni5f8d)    
+Code: [trees.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/trees.R), [fglass.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/fglass.R)
+
+Optional reading: ISLR - Section 4, Section 8; Overview of    trees [PDF](http://www.ise.bgu.ac.il/faculty/liorr/hbchap9.pdf)
 
 ## Week 1
 
