@@ -43,3 +43,29 @@ For example, [How to make a histogram in R](http://lmgtfy.com/?q=How+to+make+a+h
 
 Me, TA, and your classmates. Ask questions on the discussion board [Piazza](https://piazza.com/chicagobooth/spring2016/bus41000/home),
 work together with your classmates, and answer other's questions.
+
+## Python resources 
+
+To install Python on your computer. We recommend installing Anaconda from https://www.continuum.io/downloads
+
+Install the following libraries that will make your life much easier.
+
+* pip, a Python packages manager [https://pip.pypa.io/en/stable/installing/](https://pip.pypa.io/en/stable/installing/)       
+* matplotlib, package for drawing plots [http://matplotlib.org/users/installing.html](http://matplotlib.org/users/installing.html)
+* sklearn, machine learning toolkit [http://scikit-learn.org/stable/install.html](http://scikit-learn.org/stable/install.html)
+* scipy, scientific computation package [http://scipy.org/install.html](http://scipy.org/install.html)
+* Jupyter, an excellent interactive computing notebook for Python
+        
+Once you install pip, you can use it to install matplotlib, scipy, sklearn, and jupyter by simply typing    
+
+    * pip install matplotlib
+    * pip install scipy
+    * pip install sklearn    
+    * pip install jupyter
+
+
+Here is a great tutorial of Jupyter https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook
+ 
+Tutorial for numpy : http://cs231n.github.io/python-numpy-tutorial/
+
+Tutorial for sklearn : http://scikit-learn.org/stable/tutorial/
