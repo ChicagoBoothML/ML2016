@@ -23,7 +23,7 @@ permalink: /lectures/
 
 ## Week 2
 
-[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/p1b68bvqe6188717t01u5ni5f8d)    
+[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixttq4rhlgd1ao)    
 Code: [trees.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/trees.R), [fglass.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/fglass.R)  
 Python notebook: [BostonHousing_Trees_RandomForests_BoostedAdditiveModels.ipynb](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/BostonHousing_Trees_RandomForests_BoostedAdditiveModels.ipynb)
 
