@@ -16,8 +16,8 @@ permalink: /lectures/
 | [7]()          |                                                                |                   |  
 | [8]()          |                                                                |  HW 3 due         |  
 | [9]()          |                                                                |                   |
-| [10]()         |  In-class project presentation                                 |                   |
-| [11]()                 |  Project write-up due                                          | HW 4 due          |
+| [10]()         |  &nbsp;&nbsp;In-class project presentation                     |                            |
+| [11]()         |  &nbsp;&nbsp;Project write-up due                              | &nbsp;&nbsp;HW 4 due       |
 {: .mbtablestyle}
 
 
