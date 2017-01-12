@@ -58,10 +58,10 @@ Install the following libraries that will make your life much easier.
         
 Once you install pip, you can use it to install matplotlib, scipy, sklearn, and jupyter by simply typing    
 
-    * pip install matplotlib
-    * pip install scipy
-    * pip install sklearn    
-    * pip install jupyter
+    pip install matplotlib
+    pip install scipy
+    pip install sklearn    
+    pip install jupyter
 
 
 Here is a great tutorial of Jupyter https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook
