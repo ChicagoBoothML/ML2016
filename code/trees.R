@@ -128,7 +128,7 @@ cat('size of big tree: ',nbig,'\n')
 # the following prints out a table summarizing the output of cross-validation
 # you want to find cp corrsponding to the smallest value of xerror 
 (cptable = printcp(big.tree))
-(bestcp = cptable[ which.min(big.tree$cptable[,"xerror"]), "CP" ])   # this is the optimal cp parameter
+(bestcp = cptable[ which.min(cptable[,"xerror"]), "CP" ])   # this is the optimal cp parameter
 
 plotcp(big.tree) # plot results
 

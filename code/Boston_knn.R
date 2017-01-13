@@ -132,7 +132,7 @@ cat("the best k is: ",kbest,"\n")
 kfbest = kknn(medv~lstat,Boston,data.frame(lstat=sort(Boston$lstat)),
               k=kbest,kernel = "rectangular")
 plot(Boston$lstat,Boston$medv,cex.lab=1.2)
-lines(sort(lstat),kfbest$fitted,col="red",lwd=2,cex.lab=2)
+lines(sort(Boston$lstat),kfbest$fitted,col="red",lwd=2,cex.lab=2)
 
 
 ################
