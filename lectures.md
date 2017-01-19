@@ -8,8 +8,8 @@ permalink: /lectures/
 | &nbsp;&nbsp;Week&nbsp;&nbsp;              | Content                                                        |  Deliverables Due |
 |:-------------------:|---------------------------------------------------------------|:------------------|
 | [1](#week-1)   | &nbsp;&nbsp;Nearest Neighbors <br>&nbsp;&nbsp;Bias-Variance Trade-Off <br> &nbsp;&nbsp;Cross-Validation   |                   |
-| [2](#week-2)   | &nbsp;&nbsp;Classification and regression trees&nbsp;&nbsp;&nbsp;&nbsp;               |                   |
-| [3]()          |                                                                |  HW 1 due         |
+| [2](#week-2)   | &nbsp;&nbsp;Classification and regression trees&nbsp;&nbsp;&nbsp;&nbsp;      |                   |
+| [3](#week-3)   | &nbsp;&nbsp;Bagging and boosting&nbsp;&nbsp;&nbsp;&nbsp;       |  HW 1 due         |
 | [4]()          |                                                                |                   |
 | [5]()          |                                                                |  HW 2 due         |                 
 | [6]()          |                                                                |  Midterm due      |  
@@ -21,13 +21,19 @@ permalink: /lectures/
 {: .mbtablestyle}
 
 
+## Week 3
+[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iy4zv2kzsvt2p0)  
+Code:   
+
+Optional reading: ISLR - Section 8; Overview of Bagging [pdf](http://statistics.berkeley.edu/sites/default/files/tech-reports/421.pdf); Overview of Random Forests [pdf](https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm)
+
 ## Week 2
 
 [Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixttq4rhlgd1ao)    
 Code: [trees.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/trees.R), [fglass.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/fglass.R)  
 Python notebook: [BostonHousing_Trees_RandomForests_BoostedAdditiveModels.ipynb](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/BostonHousing_Trees_RandomForests_BoostedAdditiveModels.ipynb)
 
-Optional reading: ISLR - Section 4, Section 8; Overview of    trees [PDF](http://www.ise.bgu.ac.il/faculty/liorr/hbchap9.pdf)
+Optional reading: ISLR - Section 4, Section 8; Overview of trees [PDF](http://www.ise.bgu.ac.il/faculty/liorr/hbchap9.pdf)
 
 
 ## Week 1
