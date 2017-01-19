@@ -25,7 +25,7 @@ permalink: /lectures/
 [Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iy4zv2kzsvt2p0)  
 Code:   
 
-Optional reading: ISLR - Section 8; Overview of Bagging [pdf](http://statistics.berkeley.edu/sites/default/files/tech-reports/421.pdf); Overview of Random Forests [pdf](https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm)
+Optional reading: ISLR - Section 8; Overview of Bagging [PDF](http://statistics.berkeley.edu/sites/default/files/tech-reports/421.pdf); Overview of Random Forests [PDF](https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm)
 
 ## Week 2
 
