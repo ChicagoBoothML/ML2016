@@ -167,7 +167,7 @@ plot(kv,cvtemp)
 #run cross val several times
 set.seed(99)
 cvmean = rep(0,length(kv)) #will keep average rmse here
-ndocv = 50 #number of CV splits to try
+ndocv = 10 #number of CV splits to try
 n=length(y)
 cvmat = matrix(0,length(kv),ndocv) #keep results for each split
 for(i in 1:ndocv) {

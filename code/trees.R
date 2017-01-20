@@ -117,7 +117,7 @@ print(cor(fmat4))
 big.tree = rpart(medv~lstat, data=Boston, 
                          control=rpart.control(minsplit=5,  
                                                cp=0.0001,
-                                               xval=10)   
+                                               xval=10)    # we will use 10-fold cv 
 )
 
 nbig = length(unique(big.tree$where))

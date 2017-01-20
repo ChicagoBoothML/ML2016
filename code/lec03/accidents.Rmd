@@ -1,0 +1,41 @@
+---
+title: "Accidents data set"
+author: ""
+date: ''
+output: 
+    pdf_document:
+        number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In the event of a car accident, there may be limited resources available for dealing with the
+ensuing poperty damage and injuries. In particular, there may be a limited number of people available 
+with the ability to deliver high end medical attention if serious injuries have resulted from the accident.
+It would be useful if we could predict whether or not a serious injury resulted from the
+accident at the time the accident is reported. This could help us decide what kind of medical
+personel should be sent out initially. To this end, 42,183 observations have been collected on
+automobile accidents. For each accident you have additional type of information, such as day of week, weather conditions, and road type.
+
+- `HOUR_I_R`: 1 = rush hour, 0 = not (rush = 6-9 am, 4-7 pm)
+- `ALCOHOL_I`: Alcohol involved = 1, not involved = 2
+- `ALIGN_I`: 1 = straight, 2 = curve
+- `STRATUM_R`: 1 = NASS Crashes Involving At Least One Passenger Vehicle (i.e., A Passenger Car, Sport Utility Vehicle, Pickup Truck Or Van) Towed Due To Damage From The Crash Scene And No Medium Or Heavy Trucks Are Involved. 0 = not
+- `WRK_ZONE`: 1= yes, 0= no
+- `WKDY_I_R`: 1=weekday, 0=weekend
+- `INT_HWY`: Interstate? 1=yes, 0= no 
+- `LGTCON_I_R`:	Light conditions - 1=day, 2=dark (including dawn/dusk), 3=dark, but lighted,4=dawn or dusk
+- `MAN_COL_I`: 0=no collision, 1=head-on, 2=other form of collision
+- `PED_ACC_R`: 1=pedestrian/cyclist involved, 0=not
+- `REL_JCT_I_R`: 1=accident at intersection/interchange, 0=not at intersection
+- `REL_RWY_R`: 1=accident on roadway, 0=not on roadway
+- `PROFIL_I_R`: 1= level, 0=other
+- `SPD_LIM`: Speed limit, miles per hour 
+- `SUR_CON`: Surface conditions (1=dry, 2=wet, 3=snow/slush, 4=ice, 5=sand/dirt/oil, 8=other, 9=unknown)
+- `TRAF_CON_R`: Traffic control device: 0=none, 1=signal, 2=other (sign, officer, ...)
+- `TRAF_WAY`: 1=two-way traffic, 2=divided hwy, 3=one-way road
+- `WEATHER_R`: 1=no adverse conditions, 2=rain, snow or other adverse condition
+- `INJURY`: 1 = yes, 0 = no
+
