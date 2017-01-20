@@ -20,6 +20,8 @@ accidents_df_train[] = lapply(accidents_df_train, factor)
 accidents_df_test[] = lapply(accidents_df_test, factor)
 
 ####
+library(randomForest)
+library(gbm)
 library(rpart)
 library(rpart.plot)
 
@@ -68,7 +70,34 @@ class1_ind =  lr_test_predictions >= 0.5
 lr_test_predictions[class0_ind] = levels(accidents_df_train$INJURY)[1]
 lr_test_predictions[class1_ind] = levels(accidents_df_train$INJURY)[2]
 1 - mean(lr_test_predictions == accidents_df_test$INJURY)  # error rate using all variables
-table(actual = accidents_df_test$INJURY, predictions = nb_test_predictions)  # confusion table
+table(actual = accidents_df_test$INJURY, predictions = lr_test_predictions)  # confusion table
 
 ####
 # random forest
+
+rffit = randomForest(INJURY~.,data=accidents_df_train,mtry=3,ntree=1000)
+rf_test_predictions = predict(rffit, accidents_df_test) 
+1 - mean(rf_test_predictions == accidents_df_test$INJURY)  # error rate using all variables
+table(actual = accidents_df_test$INJURY, predictions = rf_test_predictions)  # confusion table
+
+varImpPlot(rffit)
+
+####
+# boosting
+
+accidents_df_train$y = as.numeric(accidents_df_train$INJURY)-1
+accidents_df_test$y = as.numeric(accidents_df_test$INJURY)-1
+
+boostfit = gbm(y~.,data=accidents_df_train,
+               distribution='bernoulli',
+               interaction.depth=4,
+               n.trees=10,
+               shrinkage=.02)
+b_test_predictions = predict(boostfit, accidents_df_test, n.trees = 10, type = "response") 
+class0_ind =  b_test_predictions < 0.5 
+class1_ind =  b_test_predictions >= 0.5 
+b_test_predictions[class0_ind] = levels(accidents_df_train$INJURY)[1]
+b_test_predictions[class1_ind] = levels(accidents_df_train$INJURY)[2]
+1 - mean(rf_test_predictions == accidents_df_test$INJURY)  # error rate using all variables
+table(actual = accidents_df_test$INJURY, predictions = rf_test_predictions)  # confusion table
+
