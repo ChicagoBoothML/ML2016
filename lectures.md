@@ -23,7 +23,7 @@ permalink: /lectures/
 
 ## Week 3
 [Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iy4zv2kzsvt2p0)  
-Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec03), CaHousingAnalysis: [Rmd](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/lec03/CaHousingAnalysis.Rmd), [PDF](https://github.com/ChicagoBoothML/ML2016/raw/master/code/lec03/CaHousingAnalysis.pdf)
+Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec03), CaHousingAnalysis: [Rmd](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/lec03/CaHousingAnalysis.Rmd), [PDF](https://github.com/ChicagoBoothML/ML2016/raw/master/code/lec03/CaHousingAnalysis.pdf), [Python notebook](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/UsedCar.ipynb)
 
 Optional reading: 
 * ISLR - Section 8
