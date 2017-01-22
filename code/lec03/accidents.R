@@ -85,19 +85,19 @@ varImpPlot(rffit)
 ####
 # boosting
 
-accidents_df_train$y = as.numeric(accidents_df_train$INJURY)-1
-accidents_df_test$y = as.numeric(accidents_df_test$INJURY)-1
+accidents_df_train$INJURY = as.numeric(accidents_df_train$INJURY)-1
+accidents_df_test$INJURY = as.numeric(accidents_df_test$INJURY)-1
 
-boostfit = gbm(y~.,data=accidents_df_train,
+boostfit = gbm(INJURY~.,data=accidents_df_train,
                distribution='bernoulli',
                interaction.depth=4,
-               n.trees=10,
-               shrinkage=.02)
+               n.trees=1000,
+               shrinkage=.2)
 b_test_predictions = predict(boostfit, accidents_df_test, n.trees = 10, type = "response") 
 class0_ind =  b_test_predictions < 0.5 
 class1_ind =  b_test_predictions >= 0.5 
-b_test_predictions[class0_ind] = levels(accidents_df_train$INJURY)[1]
-b_test_predictions[class1_ind] = levels(accidents_df_train$INJURY)[2]
-1 - mean(rf_test_predictions == accidents_df_test$INJURY)  # error rate using all variables
-table(actual = accidents_df_test$INJURY, predictions = rf_test_predictions)  # confusion table
+b_test_predictions[class0_ind] = 0
+b_test_predictions[class1_ind] = 1
+1 - mean(b_test_predictions == accidents_df_test$INJURY)  # error rate using all variables
+table(actual = accidents_df_test$INJURY, predictions = b_test_predictions)  # confusion table
 
