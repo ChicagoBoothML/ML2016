@@ -26,6 +26,7 @@ permalink: /lectures/
 Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec03), CaHousingAnalysis: [Rmd](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/lec03/CaHousingAnalysis.Rmd), [PDF](https://github.com/ChicagoBoothML/ML2016/raw/master/code/lec03/CaHousingAnalysis.pdf), [Python notebook](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/UsedCar.ipynb)
 
 Optional reading: 
+
 * ISLR - Section 8
 * Overview of Bagging [PDF](http://statistics.berkeley.edu/sites/default/files/tech-reports/421.pdf)
 * Overview of Random Forests [PDF](https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm)
@@ -34,11 +35,13 @@ Optional reading:
 
 [Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixttq4rhlgd1ao)    
 Code: 
+
 * [trees.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/trees.R)
 * [fglass.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/fglass.R)  
 * Boston Housing [Python notebook](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/BostonHousing_Trees_RandomForests_BoostedAdditiveModels.ipynb)
 
 Optional reading: 
+
 * ISLR - Section 4, Section 8
 * Overview of trees [PDF](http://www.ise.bgu.ac.il/faculty/liorr/hbchap9.pdf)
 
@@ -48,6 +51,7 @@ Optional reading:
 [Course Overview](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixmdzsvl8cs2u9),
 [Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixmdzj7zq0u2rp)  
 Code: 
+
 * Boston Housing [R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/Boston_knn.R), [Python notebook](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/BostonHousing_KNN_BiasVarTradeOff_CrossValid.ipynb), [Rmd](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/BostonHousing_KNN_BiasVarTradeOff_CrossValid.Rmd), [PDF](https://github.com/ChicagoBoothML/ML2016/raw/master/code/BostonHousing_KNN_BiasVarTradeOff_CrossValid.pdf)
 * [bias-variance-illustration.R](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/bias-variance-illustration.R)
 
