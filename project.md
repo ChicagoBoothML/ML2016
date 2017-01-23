@@ -14,7 +14,7 @@ Here are examples of successful projects from past:
 
 * [Facial Keypoints Detection](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixjtnuml5zz797)  
 * [Predicting mutual fund returns using machine learning tools](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixjtnlzxoh53lm)  
-* [Predicting mutual fund returns using machine learning tools](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixjtmyt1or4o7)  
+* [Predicting Surf Conditions With Neural Networks](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixjtmyt1or4o7)  
 * [Diamonds](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/ixjtnbnpbv61po)  
 
 **Deadlines:**
