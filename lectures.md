@@ -10,7 +10,7 @@ permalink: /lectures/
 | [1](#week-1)   | &nbsp;&nbsp;Nearest Neighbors <br>&nbsp;&nbsp;Bias-Variance Trade-Off <br> &nbsp;&nbsp;Cross-Validation   |                   |
 | [2](#week-2)   | &nbsp;&nbsp;Classification and regression trees&nbsp;&nbsp;&nbsp;&nbsp;      |                   |
 | [3](#week-3)   | &nbsp;&nbsp;Bagging and boosting&nbsp;&nbsp;&nbsp;&nbsp;       |  HW 1 due         |
-| [4]()          |                                                                |                   |
+| [4](#week-4)   | &nbsp;&nbsp;Evaluating classifiers&nbsp;&nbsp;&nbsp;&nbsp;     |                   |
 | [5]()          |                                                                |  HW 2 due         |                 
 | [6]()          |                                                                |  Midterm due      |  
 | [7]()          |                                                                |                   |  
@@ -19,6 +19,15 @@ permalink: /lectures/
 | [10]()         |  &nbsp;&nbsp;In-class project presentation                     |                            |
 | [11]()         |  &nbsp;&nbsp;Project write-up due                              | &nbsp;&nbsp;HW 4 due       |
 {: .mbtablestyle}
+
+## Week 4
+
+[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iyf8ppcgiok3cr)    
+Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec04)   
+
+Optional reading: 
+
+* ISLR - Section 4
 
 
 ## Week 3
