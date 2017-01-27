@@ -1,0 +1,515 @@
+---
+title: "Tabloid data set"
+author: ""
+date: ''
+output: 
+    pdf_document:
+        number_sections: true
+        includes:
+            in_header: mystyles.sty
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+options(digits=3)
+options(width = 48)
+```
+
+# Description
+
+A large retailer wants to explore the predictability of response to a
+tabloid mailing.
+
+\sk 
+
+If they mail a tabloid to a customer in their data-base, can they
+predict whether or not the customer will respond by making a
+purchase.
+
+\sk 
+
+The dependent variable is 1 if they buy something, 0 if they do not.
+
+\sk
+
+They tried to come up with x’s based on past purchasing behavior.
+
+\sk
+
+The Predictive Analytics team builds a model for \bl the probability the customer responds \bk given \rd information about the customer\bk.
+
+\sk
+
+What information about a customer do they use?
+
+- `nTab`: number of past orders.
+- `moCbook`: months since last order.
+- `iRecMer1`: 1/months since last order in merchandise category 1.
+- `llDol`: log of the dollar value of past purchases.
+
+The data for these variables is obtained from the companies
+operational data base.
+
+
+# Preprocessing
+
+We download the data and preprocess it first
+
+```{r}
+download.file(
+    'https://github.com/ChicagoBoothML/MLClassData/raw/master/Tabloid/Tabloid_test.csv',
+    'Tabloid_test.csv')
+
+download.file(
+    'https://github.com/ChicagoBoothML/MLClassData/raw/master/Tabloid/Tabloid_train.csv',
+    'Tabloid_train.csv')
+
+
+td = read.csv("Tabloid_train.csv")
+td_test = read.csv("Tabloid_test.csv")
+
+td$purchase = as.factor(td$purchase)
+td_test$purchase = as.factor(td_test$purchase)
+```
+
+\newpage
+
+# Summary statistics
+
+```{r}
+summary(td)
+```
+
+Notice that the percentage of households that make a purchase is pretty small!
+
+\sk
+
+$258/10000 = 0.0258$
+
+\sk
+
+Illustration of how `nTab` is related to `responders`.  
+```{r fig.width=10, fig.height=5}
+par(mfrow=c(1,2))
+hist(td[td$purchase==0, "nTab"], breaks=40, col="red", 
+     main="nonresponders", xlab="nTab", xlim=c(0,85))
+hist(td[td$purchase==1, "nTab"], breaks=40, col="blue", 
+     main="responders", xlab="nTab", xlim=c(0,85))
+```
+
+\newpage
+
+Here is `Y` plotted vs. each of the four `X`'s
+
+\sk
+```{r fig.width=8, fig.height=8}
+par(mfrow=c(2,2), mar=c(3,3,3,1), mgp=c(2,1,0)) 
+plot(nTab~purchase,td,col=c("red", "blue"))
+plot(moCbook~purchase,td,col=c("red", "blue"))
+plot(iRecMer1~purchase,td,col=c("red", "blue"))
+plot(llDol~purchase,td,col=c("red", "blue"))
+```
+
+\newpage
+
+# Fit models
+
+We fit
+
+* logistic regression
+* random forest model
+* boosting
+
+```{r}
+library(tree)
+library(randomForest)
+library(gbm)
+```
+
+Create some helper function used for evaluation.
+
+The following function is used to compute the deviance of a model
+
+```{r}
+# deviance loss function
+# y should be 0/1
+# phat are probabilities obtain by our algorithm 
+# wht shrinks probs in phat towards .5 --- this helps avoid numerical problems don't use log(0)!
+lossf = function(y,phat,wht=0.0000001) {
+   if(is.factor(y)) y = as.numeric(y)-1
+   phat = (1-wht)*phat + wht*.5
+   py = ifelse(y==1, phat, 1-phat)
+   return(-2*sum(log(py)))
+}
+```
+
+The following will get confucion matrix:
+
+```{r}
+# deviance loss function
+# y should be 0/1
+# phat are probabilities obtain by our algorithm 
+# thr is the cut off value - everything above thr is classified as 1
+getConfusionMatrix = function(y,phat,thr=0.5) {
+   if(is.factor(y)) y = as.numeric(y)-1
+   yhat = ifelse(phat > thr, 1, 0)
+   tb = table(predictions = yhat, 
+                   actual = y)  
+   rownames(tb) = c("predict_0", "predict_1")
+   return(tb)
+}
+```
+
+And finally, this function gives miss-classification rate:
+
+```{r}
+# deviance loss function
+# y should be 0/1
+# phat are probabilities obtain by our algorithm 
+# thr is the cut off value - everything above thr is classified as 1
+lossMR = function(y,phat,thr=0.5) {
+   if(is.factor(y)) y = as.numeric(y)-1
+   yhat = ifelse(phat > thr, 1, 0)
+   return(1 - mean(yhat == y))
+}
+```
+
+
+We need a place to store results
+```{r}
+phatL = list() #store the test phat for the different methods here
+```
+
+
+## Logistic regression
+
+We fit a logistic regression model using all variables
+```{r}
+lgfit = glm(purchase~., td, family=binomial)
+print(summary(lgfit))
+```
+
+Predictions are stored for later analysis
+```{r}
+phat = predict(lgfit, td_test, type="response")
+phatL$logit = matrix(phat,ncol=1) 
+```
+
+\newpage
+
+## Random Forest
+
+We fit random forest models for a few different settings.
+
+```{r}
+set.seed(99)
+
+##settings for randomForest
+p=ncol(td)-1
+mtryv = c(p, sqrt(p))
+ntreev = c(500,1000)
+setrf = expand.grid(mtryv,ntreev)  # this contains all settings to try
+colnames(setrf)=c("mtry","ntree")
+phatL$rf = matrix(0.0,nrow(td_test),nrow(setrf))  # we will store results here
+
+###fit rf
+for(i in 1:nrow(setrf)) {
+   #fit and predict
+   frf = randomForest(purchase~., data=td, 
+                      mtry=setrf[i,1],
+                      ntree=setrf[i,2],
+                      nodesize=10)
+   phat = predict(frf, newdata=td_test, type="prob")[,2]
+   phatL$rf[,i]=phat
+}
+```
+
+\newpage
+
+## Boosting
+
+We fit boosting models for a few different settings.
+
+```{r}
+##settings for boosting
+idv = c(2,4)
+ntv = c(1000,5000)
+shv = c(.1,.01)
+setboost = expand.grid(idv,ntv,shv)
+colnames(setboost) = c("tdepth","ntree","shrink")
+phatL$boost = matrix(0.0,nrow(td_test),nrow(setboost))
+```
+
+Remember to convert to numeric 0,1 values for boosting.
+```{r}
+tdB = td; tdB$purchase = as.numeric(tdB$purchase)-1
+td_testB = td_test; td_testB$purchase = as.numeric(td_testB$purchase)-1
+```
+
+Fitting
+```{r}
+for(i in 1:nrow(setboost)) {
+   ##fit and predict
+   fboost = gbm(purchase~., data=tdB, distribution="bernoulli",
+              n.trees=setboost[i,2],
+              interaction.depth=setboost[i,1],
+              shrinkage=setboost[i,3])
+   
+   phat = predict(fboost,
+                  newdata=td_testB,
+                  n.trees=setboost[i,2],
+                  type="response")
+
+   phatL$boost[,i] = phat
+}
+```
+
+# Analysis of results
+
+
+## Miss-classification rate
+
+Let us first look at miss-classification rate.
+
+For **logistic regression** we have:
+```{r}
+getConfusionMatrix(td_test$purchase, phatL[[1]][,1], 0.5)
+cat('Missclassification rate = ', lossMR(td_test$purchase, phatL[[1]][,1], 0.5), '\n')
+```
+
+\newpage
+
+For **random forest** we have:
+```{r}
+nrun = nrow(setrf)
+for(j in 1:nrun) {
+  print(setrf[j,])
+  print("Confusion Matrix:")
+  print(getConfusionMatrix(td_test$purchase, phatL[[2]][,j], 0.5))
+  cat('Missclassification rate = ', lossMR(td_test$purchase, phatL[[2]][,j], 0.5), '\n')
+}
+```
+
+\newpage
+
+For **boosting** we have:
+```{r}
+nrun = nrow(setboost)
+for(j in 1:nrun) {
+  print(setboost[j,])
+  print("Confusion Matrix:")
+  print(getConfusionMatrix(td_test$purchase, phatL[[3]][,j], 0.5))
+  cat('Missclassification rate = ', lossMR(td_test$purchase, phatL[[3]][,j], 0.5), '\n')
+}
+```
+
+\sk\sk\sk
+
+This is strange... There seems to be fit in the model.
+```{r fig.width=4, fig.height=4}
+par(mar=c(3,3,3,1), mgp=c(2,1,0)) 
+phat = predict(lgfit, newdata=td, type="response")
+plot(phat~td$purchase, col=c("red","blue"), 
+     xlab="purchase", ylab="phat", ylim=c(0,1.05), cex.text=0.7)
+```
+
+
+\newpage
+
+## Deviance
+
+Plot test set loss --- deviance:
+
+```{r fig.width=8, fig.height=8}
+lossL = list()
+nmethod = length(phatL)
+for(i in 1:nmethod) {
+   nrun = ncol(phatL[[i]])
+   lvec = rep(0,nrun)
+   for(j in 1:nrun) lvec[j] = lossf(td_test$purchase, phatL[[i]][,j])
+   lossL[[i]]=lvec; names(lossL)[i] = names(phatL)[i]
+}
+lossv = unlist(lossL)
+plot(lossv, ylab="loss on Test", type="n")
+nloss=0
+for(i in 1:nmethod) {
+   ii = nloss + 1:ncol(phatL[[i]])
+   points(ii,lossv[ii],col=i,pch=17)
+   nloss = nloss + ncol(phatL[[i]])
+}
+legend("topright",legend=names(phatL),col=1:nmethod,pch=rep(17,nmethod))
+```
+
+From each method class, we choose the one that has the lowest error on the validation set.
+
+```{r}
+nmethod = length(phatL)
+phatBest = matrix(0.0,nrow(td_test),nmethod) #pick off best from each method
+colnames(phatBest) = names(phatL)
+for(i in 1:nmethod) {
+   nrun = ncol(phatL[[i]])
+   lvec = rep(0,nrun)
+   for(j in 1:nrun) lvec[j] = lossf(td_test$purchase,phatL[[i]][,j])
+   imin = which.min(lvec)
+   phatBest[,i] = phatL[[i]][,imin]
+   phatBest[,i] = phatL[[i]][,1]
+}
+```
+
+\newpage
+
+We can plot $\hat p$ for best models on the test set
+
+```{r fig.width=8, fig.height=8}
+pairs(phatBest)
+```
+
+\newpage
+
+The idea behind the tabloid example is that if we can predict who
+will buy we can target those customers and send them the tabloid.
+
+\sk
+
+To get an idea of how well our model is working, we can imagine
+choosing a customer from the data set to mail to first - did they
+buy?
+
+\sk
+
+We can look at the y value to see if they bought.
+
+\sk
+
+Whom would you mail to first?
+
+\sk
+
+You could mail the first 40 people in your database.
+
+\scriptsize
+```{r}
+td$phat = phat
+td[1:40, c("purchase", "phat")]
+```
+
+\normalsize\sk\sk
+Out of the first 40, there is only one purchase.
+
+\newpage
+
+If you believe your model, you might mail to the household with
+the largest $\hat p$ (estimated prob of buying) first. 
+Then you would mail to the household with the second largest $\hat p$
+and so on.
+
+
+\scriptsize
+```{r}
+td$phat = phat
+sorted_phat = order(-phat)
+td[sorted_phat[1:40], c("purchase", "phat")]
+```
+
+\normalsize
+\sk\sk
+You got 16 purchases out of the first 40 customers you targeted.
+Using only 40/10000 = 0.004 of the data we got 16/258 = .062 of
+the purchases!
+
+
+\newpage
+
+## Expected value of a classifier
+
+Let us target everyone with $\hat p > 0.02$
+
+Our **cost/benefit matrix** looks like this
+```{r}
+cost_benefit = matrix(c(0,-0.8,0,39.20), nrow=2)
+print(cost_benefit)
+```
+
+Expected values of targeting is below:
+
+```{r}
+confMat = getConfusionMatrix(td_test$purchase, phatBest[,1], 0.02)
+print(confMat)
+cat("Expected value of targeting using logistic regression = ", 
+    sum(sum(confMat * cost_benefit)), "\n")
+```
+
+```{r}
+confMat = getConfusionMatrix(td_test$purchase, phatBest[,2], 0.02)
+print(confMat)
+cat("Expected value of targeting using random forests = ", 
+    sum(sum(confMat * cost_benefit)), "\n")
+```
+
+```{r}
+confMat = getConfusionMatrix(td_test$purchase, phatBest[,3], 0.02)
+print(confMat)
+cat("Expected value of targeting using boosting = ", 
+    sum(sum(confMat * cost_benefit)), "\n")
+```
+
+\newpage
+
+## ROC curves
+
+Library for plotting various summary curves
+```{r}
+library(ROCR)
+```
+
+```{r fig.width=6, fig.height=6}
+plot(c(0,1),c(0,1),xlab='FPR',ylab='TPR',main="ROC curve",cex.lab=1,type="n")
+for(i in 1:ncol(phatBest)) {
+   pred = prediction(phatBest[,i], td_test$purchase)
+   perf = performance(pred, measure = "tpr", x.measure = "fpr")
+   lines(perf@x.values[[1]], perf@y.values[[1]],col=i)
+}
+abline(0,1,lty=2)
+legend("topleft",legend=names(phatL),col=1:nmethod,lty=rep(1,nmethod))
+```
+
+
+\newpage 
+
+## Lift curves
+
+```{r fig.width=6, fig.height=6}
+pred = prediction(phatBest[,1], td_test$purchase)
+perf = performance(pred, measure = "lift", x.measure = "rpp")
+plot(perf, col=1, ylim=c(0,5))
+abline(h=1, lty=2)
+
+for(i in 2:ncol(phatBest)) {
+   pred = prediction(phatBest[,i], td_test$purchase)
+   perf = performance(pred, measure = "lift", x.measure = "rpp")
+   lines(perf@x.values[[1]], perf@y.values[[1]],col=i)
+}
+legend("topright",legend=names(phatL),col=1:nmethod,lty=rep(1,nmethod))
+```
+
+\newpage
+
+## Cummulative response 
+
+
+```{r fig.width=6, fig.height=6}
+pred = prediction(phatBest[,1], td_test$purchase)
+perf = performance(pred, measure = "tpr", x.measure = "rpp")
+plot(perf, col=1, ylim=c(0,1))
+abline(h=1, lty=2)
+abline(0,1,lty=2)
+for(i in 2:ncol(phatBest)) {
+   pred = prediction(phatBest[,i], td_test$purchase)
+   perf = performance(pred, measure = "tpr", x.measure = "rpp")
+   lines(perf@x.values[[1]], perf@y.values[[1]],col=i)
+}
+legend("bottomright",legend=names(phatL),col=1:nmethod,lty=rep(1,nmethod))
+```
+
