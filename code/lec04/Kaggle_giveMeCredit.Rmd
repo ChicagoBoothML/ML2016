@@ -94,7 +94,7 @@ We fit
 * random forest model
 * boosting
 
-```{r}
+```{r message=F}
 library(ROCR)
 library(tree)
 library(randomForest)
@@ -239,6 +239,7 @@ for(i in 1:nrow(setboost)) {
 }
 ```
 
+\newpage
 # Analysis of results
 
 
