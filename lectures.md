@@ -23,7 +23,8 @@ permalink: /lectures/
 
 ## Week 5
 
-[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iypd4vz34iq6s6)    
+[SVM](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iypd4vz34iq6s6),
+[Optimization](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iypg1pt1phx3o7)   
 Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec05)   
 
 Optional reading: 
