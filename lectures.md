@@ -11,7 +11,7 @@ permalink: /lectures/
 | [2](#week-2)   | &nbsp;&nbsp;Classification and regression trees&nbsp;&nbsp;&nbsp;&nbsp;      |                   |
 | [3](#week-3)   | &nbsp;&nbsp;Bagging and boosting&nbsp;&nbsp;&nbsp;&nbsp;       |  HW 1 due         |
 | [4](#week-4)   | &nbsp;&nbsp;Evaluating classifiers&nbsp;&nbsp;&nbsp;&nbsp;     |                   |
-| [5]()          |                                                                |  HW 2 due         |                 
+| [5](#week-5)   | &nbsp;&nbsp;Support Vector Machines&nbsp;&nbsp;&nbsp;&nbsp;    |  HW 2 due         |                 
 | [6]()          |                                                                |  Midterm due      |  
 | [7]()          |                                                                |                   |  
 | [8]()          |                                                                |  HW 3 due         |  
@@ -19,6 +19,17 @@ permalink: /lectures/
 | [10]()         |  &nbsp;&nbsp;In-class project presentation                     |                            |
 | [11]()         |  &nbsp;&nbsp;Project write-up due                              | &nbsp;&nbsp;HW 4 due       |
 {: .mbtablestyle}
+
+
+## Week 5
+
+[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iypd4vz34iq6s6)    
+Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec05)   
+
+Optional reading: 
+
+* ISLR - Section 9
+
 
 ## Week 4
 
