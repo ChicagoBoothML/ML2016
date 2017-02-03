@@ -1,0 +1,485 @@
+---
+title: "SVM Example"
+author: ""
+date: ''
+output: 
+    pdf_document:
+        number_sections: true
+        includes:
+            in_header: mystyles.sty
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      include = TRUE, 
+                      eval = TRUE, 
+                      fig.width = 7, fig.height = 6, 
+                      warning = F,
+                      cache = TRUE,
+                      digits = 3,
+                      width = 48) 
+```
+
+
+The goal is to:
+
+* Learn how manipulate a SVM in R with the package kernlab
+* Observe the effect of changing the C parameter and the kernel
+* Test a SVM classifier for cancer diagnosis from gene expression data
+
+# Linear SVM
+
+Here we generate a toy dataset in 2D, and learn how to train and test a SVM.
+
+## Generate toy data
+First generate a set of positive and negative examples from 2 Gaussians.
+
+```{r}
+set.seed(1)
+
+n <- 150 #number of data points
+p <- 2 # dimension
+sigma <- 1 # variance of the distribution
+meanpos <- 0 # centre of the distribution of positive examples
+meanneg <- 3 # centre of the distribution of negative examples
+npos <- round(n / 2) # number of positive examples
+nneg <- n - npos # number of negative examples
+
+# Generate the positive and negative examples
+xpos <- matrix(rnorm(npos * p, mean = meanpos, sd = sigma), npos, p)
+xneg <- matrix(rnorm(nneg * p, mean = meanneg, sd = sigma), npos, p)
+x <- rbind(xpos, xneg)
+
+# Generate the labels
+y <- matrix(c(rep(1, npos), rep(-1, nneg)))
+
+# Visualize the data
+plot(x, col = ifelse(y > 0, 1, 2))
+legend("topleft", c("Positive", "Negative"), col = seq(2), pch = 1, text.col = seq(2))
+```
+
+Now we split the data into a training set (80%) and a test set (20%)
+
+```{r}
+# Prepare a training and a test set
+ntrain <- round(n * 0.8) # number of training examples
+tindex <- sample(n, ntrain) # indices of training samples
+xtrain <- x[tindex, ]
+xtest <- x[-tindex, ]
+ytrain <- y[tindex]
+ytest <- y[-tindex]
+istrain <- rep(0, n)
+istrain[tindex] <- 1
+
+# Visualize
+plot(x, col = ifelse(y > 0, 1, 2), pch = ifelse(istrain == 1,1,2))
+legend("topleft", c("Positive Train", "Positive Test", "Negative Train", "Negative Test"), col = c(1, 1, 2, 2), pch = c(1, 2, 1, 2), text.col=c(1,1,2,2))
+```
+
+## Train a SVM
+
+Now we train a linear SVM with parameter C=100 on the training set.
+
+```{r train_svm_linear}
+# load the kernlab package
+# install.packages("kernlab")
+library(kernlab)
+
+# train the SVM
+svp <- ksvm(xtrain, ytrain, type = "C-svc", kernel = "vanilladot", C=100, scaled=c())
+
+#Look and understand what svp contains
+# General summary
+svp
+
+# Attributes that you can access
+attributes(svp)
+
+# For example, the support vectors
+alpha(svp)
+alphaindex(svp)
+b(svp)
+
+# Use the built-in function to pretty-plot the classifier
+plot(svp, data = xtrain)
+```
+  
+Next, we create a function `plotlinearsvm=function(svp,xtrain)` to plot the points and the decision boundaries of a linear SVM.
+
+```{r}
+plotlinearsvm <- function(svp, xtrain, plot_legend=T){
+  plot(xtrain, pch = ifelse(ytrain > 0, 1, 2), xlim = c(-2, 6), ylim = c(-3, 6))
+  if (plot_legend)
+    legend("topleft", c("Positive", "Negative"), pch = seq(2))
+  w = colSums(unlist(alpha(svp)) * ytrain[unlist(alphaindex(svp))] * xtrain[unlist(alphaindex(svp)),])
+  b = - b(svp) 
+  abline(a= -b / w[2], b = -w[1]/w[2])
+  abline(a= (-b+1)/ w[2], b = -w[1]/w[2], lty = 2)
+  abline(a= (-b-1)/ w[2], b = -w[1]/w[2], lty = 2)
+}
+
+plotlinearsvm(svp, xtrain)
+```
+
+The figure represents a linear SVM with decision boundary $f(x) = 0$. Dotted lines correspond to the level
+$f(x) = 1$ and $f(x) = -1$.
+
+
+## Predict with a SVM
+
+Now we can use the trained SVM to predict the label of points in the test set, and we analyze the results using variant metrics.
+
+```{r predict_linear}
+# Predict labels on test
+ypred <- predict(svp, xtest)
+table(ytest, ypred) 
+
+# Compute accuracy
+sum(ypred == ytest) / length(ytest)
+
+# Compute at the prediction scores
+ypredscore <- predict(svp, xtest, type = "decision")
+
+# Check that the predicted labels are the signs of the scores
+table(ypredscore > 0, ypred)
+
+# Package to compute ROC curve, precision-recall etc...
+# install.packages("ROCR")
+library(ROCR)
+pred <- prediction(ypredscore, ytest)
+
+# Plot ROC curve
+perf <- performance(pred, measure = "tpr", x.measure = "fpr")
+plot(perf)
+
+# Plot precision/recall curve
+perf <- performance(pred, measure = "prec", x.measure = "rec")
+plot(perf)
+
+# Plot accuracy as function of threshold
+perf <- performance(pred, measure = "acc")
+plot(perf)
+```
+
+# Cross-validation
+
+Instead of fixing a training set and a test set, we can improve the quality of these estimates by running k-fold cross-validation. We split the training set in k groups of approximately the same size, then iteratively train a SVM using k - 1 groups and make prediction on the group which was left aside. When k is equal to the number of training points, we talk of leave-one-out (LOO) cross-validatin. To generate a random split of n points in k folds, we can for example create the following function:
+
+```{r cv}
+cv.folds <- function(y, folds = 3){
+  ## randomly split the n samples into folds
+  split(sample(length(y)), rep(1:folds, length = length(y)))
+}
+```
+
+We write a function `cv.ksvm = function(x, y, folds = 3,...)` which returns a vector ypred of predicted decision score for all points by k-fold cross-validation.
+
+```{r}
+cv.ksvm <- function(x, y, folds = 3,...){
+  index = cv.folds(y, folds = folds)
+  predScore = rep(NA, length(y))
+  for (i in 1:folds){
+    toTrain = unname(unlist(index[-i]))
+    testSet = index[[i]]
+    svp = ksvm(x[toTrain, ], y[toTrain], type = "C-svc",
+         kernel = "vanilladot", C=100, scaled=c()) 
+    predScore[testSet] = predict(svp, x[unlist(index[[i]]), ], type = "decision")
+  }
+ predScore
+}
+```
+
+We compute the various performance of the SVM by 5-fold cross-validation. 
+
+
+```{r}
+ypredscore = cv.ksvm(x, y, folds=5)
+pred = prediction(ypredscore, y)
+perf = performance(pred, measure = "tpr", x.measure = "fpr")
+plot(perf)
+
+perf = performance(pred, measure = "acc")
+plot(perf)
+```
+
+
+Alternatively, the ksvm function can automatically compute the k-fold cross-validation accuracy.
+
+
+```{r cv_svm}
+svp <- ksvm(x, y, type = "C-svc", kernel = "vanilladot", C = 100, scaled=c(), cross = 5)
+print(cross(svp))
+print(error(svp))
+```
+
+
+## Effect of C
+
+The C parameters balances the trade-off between having a large margin and separating the positive and unlabeled on the training set. It is important to choose it well to have good generalization.
+
+Plot the decision functions of SVM trained on the toy examples for different values of C in the range $2^{seq(-10,14)}$. 
+
+```{r}
+cost = 2^(seq(-10, 14, by=3))
+par(mfrow = c(3,3))
+for (c in cost){
+  svp = ksvm(xtrain, ytrain, type = "C-svc", kernel = "vanilladot", C=c, scaled=c())
+  plotlinearsvm(svp, xtrain, plot_legend = F)
+}
+par(mfrow=c(1,1))
+```
+
+
+Plot the 5-fold cross-validation error as a function of C.
+
+```{r}
+cost = 2^(seq(-10, 15))
+crossError = rep(NA, length(cost))
+error = sapply(cost, function(c){
+  cross(ksvm(x, y, type = "C-svc", kernel = "vanilladot", C = c, scaled=c(), cross = 5))
+})
+plot(cost, error, type='b')
+plot(log2(cost), error, type='b')
+```
+
+Do the same on data with more overlap between the two classes, e.g., re-generate toy data with meanneg being 1.
+
+```{r}
+n <- 150 #number of data points
+p <- 2 # dimension
+sigma <- 1 # variance of the distribution
+meanpos <- 0 # centre of the distribution of positive examples
+meanneg <- 1 # centre of the distribution of negative examples
+npos <- round(n / 2) # number of positive examples
+nneg <- n - npos # number of negative examples
+
+# Generate the positive and negative examples
+xpos <- matrix(rnorm(npos * p, mean = meanpos, sd = sigma), npos, p)
+xneg <- matrix(rnorm(nneg * p, mean = meanneg, sd = sigma), npos, p)
+x <- rbind(xpos, xneg)
+
+# Generate the labels
+y <- matrix(c(rep(1, npos), rep(-1, nneg)))
+
+# Visualize the data
+plot(x, col = ifelse(y > 0, 1, 2))
+legend("topleft", c("Positive", "Negative"), col = seq(2), pch = 1, text.col = seq(2))
+
+# generate training/testing
+ntrain <- round(n * 0.8) # number of training examples
+tindex <- sample(n, ntrain) # indices of training samples
+xtrain <- x[tindex, ]
+xtest <- x[-tindex, ]
+ytrain <- y[tindex]
+ytest <- y[-tindex]
+istrain <- rep(0, n)
+istrain[tindex] <- 1
+
+
+# cost cross validation
+cost = 2^(seq(-10, 15))
+error = sapply(cost, function(c){
+  cross(ksvm(x, y, type = "C-svc", kernel = "vanilladot", C = c, scaled=c(), 
+             cross = 5))
+})
+plot(cost, error, type='b')
+plot(log2(cost), error, type='b')
+```
+
+
+\pagebreak
+
+# Nonlinear SVM
+
+Sometimes linear SVM are not enough. For example, generate a toy dataset where positive and negative examples are mixture of two Gaussians which are not linearly separable.
+
+```{r}
+RandomMatrix <- function( dist, n, p, ... ) {
+  rs <- dist( n*p, ... )
+  matrix( rs, n, p )
+}
+
+GenerateDatasetNonlinear <- function( n, p ) {
+  bottom.left <- RandomMatrix( rnorm, n, p, mean=0, sd=1 )
+  upper.right <- RandomMatrix( rnorm, n, p, mean=4, sd=1 )
+  tmp1 <- RandomMatrix( rnorm, n, p, mean=0, sd=1 )
+  tmp2 <- RandomMatrix( rnorm, n, p, mean=4, sd=1 )
+  upper.left <- cbind( tmp1[,1], tmp2[,2] )
+  bottom.right <- cbind( tmp2[,1], tmp1[,2] )
+  y <- c( rep( 1, 2 * n ), rep( -1, 2 * n ) )
+  idx.train <- sample( 4 * n, floor( 3.5 * n ) )
+  is.train <- rep( 0, 4 * n )
+  is.train[idx.train] <- 1
+  data.frame( x=rbind( bottom.left, upper.right, upper.left, bottom.right ), y=y, train=is.train )
+}
+
+data = GenerateDatasetNonlinear(150, 2)
+plot(data[,1:2], col = data[,3] + 2)
+x = as.matrix(data[,1:2])
+y = matrix(data[,3])
+```
+
+
+To solve this problem, we should instead use a nonlinear SVM. This is obtained by simply changing the kernel parameter. For example, to use a Gaussian RBF kernel with $\sigma = 1$ and $C = 1$:
+
+```{r non_linear_svm}
+# Train a nonlinear SVM
+svp <- ksvm(x, y, type = "C-svc", kernel="rbf", kpar = list(sigma = 1), C = 1)
+
+# Visualize it
+plot(svp, data = x)
+```
+
+You should obtain something that look like Figure 3. Much better than the linear SVM, no? The nonlinear SVM has now two parameters: $\sigma$ and C. Both play a role in the generalization capacity of the SVM.
+
+
+Visualize and compute the 5-fold cross-validation error for different values of C and $\sigma$. Observe their influence.
+
+```{r}
+library(ggplot2)
+cost = 2^(seq(-10, 15, by=2))
+sigma = 0:5
+error = sapply(cost, function(c){
+  sapply(sigma, function(s){
+    cross(ksvm(x, y, type = "C-svc", kernel="rbf", kpar = list(sigma = s), C = c,
+               scaled=c(), cross = 5))
+  })
+})
+toPlotError = data.frame(sigma = rep(sigma, length(cost)), 
+                         cost = rep(cost, each = length(sigma)),
+                         error = as.vector(error))
+                         
+ggplot(data = toPlotError, aes(x=cost, y=error)) + geom_point() + geom_line() + 
+  facet_grid(.~sigma) 
+```
+
+A useful heuristic to choose $\sigma$ is implemented in kernlab. It is based on the quantiles of the distances between the training point.
+
+```{r train_non_linear}
+# Train a nonlinear SVM with automatic selection of sigma by heuristic
+svp <- ksvm(x, y, type = "C-svc", kernel = "rbf", C = 1)
+
+# Visualize it
+plot(svp, data = x)
+```
+
+Train a nonlinear SVM with various of C with automatic determination of $\sigma$. In fact, many other nonlinear kernels are implemented. Check the documentation of kernlab to see them: `?kernels`
+
+```{r}
+library(ggplot2)
+cost = 2^(seq(-10, 15, by=2))
+error = sapply(1:length(cost), function(i){
+    svp = ksvm(x, y, type = "C-svc", kernel = "rbf", C = cost[i], cross = 5)
+    cross(svp)
+})
+plot(cost, error, type="o")
+```
+
+Test the polynomial, hyperbolic tangent, Laplacian, Bessel and ANOVA kernels on the toy examples.
+
+```{r}
+myKernels = c("polydot", "tanhdot", "laplacedot", "besseldot", "anovadot")
+for (kernel in myKernels){
+  plot(ksvm(x, y, type = "C-svc", kernel = kernel, C = 1), data=x)
+}
+```
+
+\pagebreak
+
+# Application: cancer diagnosis from gene expression data
+
+As a real-world application, let us test the ability of SVM to predict the class of a tumour from gene expression data. We use a publicly available dataset of gene expression data for 128 different individuals with acute lymphoblastic leukemia (ALL).
+
+```{r AML}
+# To install this package run 
+# 
+# source("https://bioconductor.org/biocLite.R")
+# biocLite("ALL")
+#
+#
+# Load the ALL dataset
+library(ALL)
+data(ALL)
+
+# Inspect them
+?ALL
+show(ALL)
+print(summary(pData(ALL)))
+```
+
+Here we focus on predicting the type of the disease (B-cell or T-cell). We get the expression data and disease type as follows
+
+```{r explore_aml}
+x <- t(exprs(ALL))
+y <- substr(ALL$BT,1,1)
+```
+
+Test the ability of a SVM to predict the class of the disease from gene expression. Check the influence of the parameters.
+
+```{r}
+# You actually need to play a lot with the parameters: kernels, costs, ...
+
+x <- t(exprs(ALL))
+y <- substr(ALL$BT,1,1)
+
+# train and test sets
+n = length(y)
+ntrain <- round(n * 0.8) # number of training examples
+tindex <- sample(n, ntrain) # indices of training samples
+xtrain <- x[tindex, ]
+xtest <- x[-tindex, ]
+ytrain <- y[tindex]
+ytest <- y[-tindex]
+
+# train svm on train set
+svp = ksvm(xtrain, ytrain, type = "C-svc", kernel = "rbf", C = 10)
+
+# predict on test set
+(pred = predict(svp, xtest))
+(acc = sum(as.vector(pred) == ytest) / length(ytest))
+```
+
+Finally, we may want to predict the type and stage of the diseases. We are then confronted with a multi-class classification problem, since the variable to predict can take more than two values:
+
+```{r aml_expression}
+y <- ALL$BT
+print(y)
+```
+
+Fortunately, kernlab implements automatically multi-class SVM by an all-versus-all strategy to combine several binary SVM.
+
+Test the ability of a SVM to predict the class and the stage of the disease from gene expression.
+
+```{r}
+# now y is multiclass
+x <- t(exprs(ALL))
+y <- ALL$BT
+
+# train and test sets (same as previous question)
+n = length(y)
+ntrain <- round(n * 0.8) # number of training examples
+tindex <- sample(n, ntrain) # indices of training samples
+xtrain <- x[tindex, ]
+xtest <- x[-tindex, ]
+ytrain <- y[tindex]
+ytest <- y[-tindex]
+
+# train svm on train set
+# type of svm is now able to handle multiclass
+svp = ksvm(xtrain, ytrain, type = "kbb-svc", kernel = "rbf", C = 10)
+
+# predict on test set
+(pred = predict(svp, xtest))
+(acc = sum(as.vector(pred) == ytest) / length(ytest))
+```
+
+
+
+
+
+
+
+
+
+
