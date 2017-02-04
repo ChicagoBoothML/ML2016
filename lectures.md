@@ -34,7 +34,7 @@ Optional reading:
 
 ## Week 4
 
-[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iyf8ppcgiok3cr)    
+[Slides](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iyrkjpbfsqt7oz)    
 Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec04)   
 
 Kaggle Credit Score: [Rmd](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/lec04/Kaggle_giveMeCredit.Rmd), [PDF](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/lec04/Kaggle_giveMeCredit.Rmd), [Python Notebook](https://raw.githubusercontent.com/ChicagoBoothML/ML2016/master/code/Kaggle%20Credit%20Scoring/Python/KaggleCreditScoring.ipynb)
