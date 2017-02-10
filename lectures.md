@@ -12,7 +12,7 @@ permalink: /lectures/
 | [3](#week-3)   | &nbsp;&nbsp;Bagging and boosting&nbsp;&nbsp;&nbsp;&nbsp;       |  HW 1 due         |
 | [4](#week-4)   | &nbsp;&nbsp;Evaluating classifiers&nbsp;&nbsp;&nbsp;&nbsp;     |                   |
 | [5](#week-5)   | &nbsp;&nbsp;Support Vector Machines&nbsp;&nbsp;&nbsp;&nbsp;    |  HW 2 due         |                 
-| [6]()          |                                                                |  Midterm due      |  
+| [6](#week-6)   | &nbsp;&nbsp;Optimization and Intro to Neural networks&nbsp;&nbsp;&nbsp;     |  Midterm due      |  
 | [7]()          |                                                                |                   |  
 | [8]()          |                                                                |  HW 3 due         |  
 | [9]()          |                                                                |                   |
@@ -20,6 +20,20 @@ permalink: /lectures/
 | [11]()         |  &nbsp;&nbsp;Project write-up due                              | &nbsp;&nbsp;HW 4 due       |
 {: .mbtablestyle}
 
+## Week 6
+
+[Optimization](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iypg1pt1phx3o7)   
+[Neural networks](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iyzbfm5jl4s6wr)   
+Code: [scripts](https://github.com/ChicagoBoothML/ML2016/tree/master/code/lec06)   
+
+Optional reading: 
+
+* Deep Learning by Ian Goodfellow and Yoshua Bengio and Aaron Courville    
+  Book available at: http://www.deeplearningbook.org/    
+  Read chapter 6. Skim through chapters 7 and 8.   
+
+* h2o [booklet](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/booklets/DeepLearningBooklet.pdf) on deep learning    
+* [h2o package](http://docs.h2o.ai/h2o/latest-stable/index.html)  
 
 ## Week 5
 
