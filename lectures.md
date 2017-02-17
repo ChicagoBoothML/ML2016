@@ -13,12 +13,23 @@ permalink: /lectures/
 | [4](#week-4)   | &nbsp;&nbsp;Evaluating classifiers&nbsp;&nbsp;&nbsp;&nbsp;     |                   |
 | [5](#week-5)   | &nbsp;&nbsp;Support Vector Machines&nbsp;&nbsp;&nbsp;&nbsp;    |  HW 2 due         |                 
 | [6](#week-6)   | &nbsp;&nbsp;Optimization and Intro to Neural networks&nbsp;&nbsp;&nbsp;     |  Midterm due      |  
-| [7]()          |                                                                |                   |  
+| [7](#week-7)   | &nbsp;&nbsp;Deep learning and Auto-encoders&nbsp;&nbsp;&nbsp;  |                   |  
 | [8]()          |                                                                |  HW 3 due         |  
 | [9]()          |                                                                |                   |
 | [10]()         |  &nbsp;&nbsp;In-class project presentation                     |                            |
 | [11]()         |  &nbsp;&nbsp;Project write-up due                              | &nbsp;&nbsp;HW 4 due       |
 {: .mbtablestyle}
+
+## Week 7
+
+[Auto-encoders](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iz9e9iocmhrgr)   
+
+Optional reading: 
+
+* Deep Learning by Ian Goodfellow and Yoshua Bengio and Aaron Courville    
+  Book available at: http://www.deeplearningbook.org/    
+  Chapters 9 and 15 provide enormous amount of detail.
+
 
 ## Week 6
 
