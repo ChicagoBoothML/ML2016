@@ -33,7 +33,7 @@ Optional reading:
 
 ## Week 8
 
-[Recommender Systems](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/izdon22zgff2dc)   
+[Recommender Systems](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/izdon22zgff2dc)  --- Guest lecture: [Richard Hahn](https://www.chicagobooth.edu/faculty/directory/h/p-richard-hahn)
 
 Optional reading:
 
