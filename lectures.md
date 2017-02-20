@@ -13,22 +13,50 @@ permalink: /lectures/
 | [4](#week-4)   | &nbsp;&nbsp;Evaluating classifiers&nbsp;&nbsp;&nbsp;&nbsp;     |                   |
 | [5](#week-5)   | &nbsp;&nbsp;Support Vector Machines&nbsp;&nbsp;&nbsp;&nbsp;    |  HW 2 due         |                 
 | [6](#week-6)   | &nbsp;&nbsp;Optimization and Intro to Neural networks&nbsp;&nbsp;&nbsp;     |  Midterm due      |  
-| [7](#week-7)   | &nbsp;&nbsp;Deep learning and Auto-encoders&nbsp;&nbsp;&nbsp;  |                   |  
-| [8]()          |                                                                |  HW 3 due         |  
-| [9]()          |                                                                |                   |
+| [7](#week-7)   | &nbsp;&nbsp;Deep learning&nbsp;&nbsp;&nbsp;                    |                   |  
+| [8](#week-8)   | &nbsp;&nbsp;Recommender Systems&nbsp;&nbsp;&nbsp;              |  HW 3 due         |  
+| [9](#week-9)   | &nbsp;&nbsp;Autoencoders                                       |                   |
 | [10]()         |  &nbsp;&nbsp;In-class project presentation                     |                            |
 | [11]()         |  &nbsp;&nbsp;Project write-up due                              | &nbsp;&nbsp;HW 4 due       |
 {: .mbtablestyle}
 
-## Week 7
+## Week 9
 
-[Auto-encoders](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iz9e9iocmhrgr)   
+[Auto-encoders](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iz9e9iocmhrgr)
 
 Optional reading: 
 
 * Deep Learning by Ian Goodfellow and Yoshua Bengio and Aaron Courville    
   Book available at: http://www.deeplearningbook.org/    
-  Chapters 9 and 15 provide enormous amount of detail.
+  Chapter 15 
+  
+
+## Week 8
+
+[Recommender Systems](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/izdon22zgff2dc)   
+
+Optional reading:
+
+* We will be using recommenderlab package.
+  + [recommenderlab: Reference manual](https://cran.r-project.org/web/packages/recommenderlab/recommenderlab.pdf)   
+  + [recommenderlab: Vignette](https://cran.r-project.org/web/packages/recommenderlab/vignettes/recommenderlab.pdf)   
+* [Amazon.com Recommendations](http://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf) 
+* [Cold Start Problem](https://pdfs.semanticscholar.org/44af/1071f2b943b178ea8259e14fb0c722a3bcd4.pdf) ---  Finding a Needle in a Haystack of Reviews    
+* [Matrix Factorization Techniques For Recommender Systems](https://datajobs.com/data-science-repo/Recommender-Systems-%5BNetflix%5D.pdf)
+* [All Together Now: A Perspective on the Netflix Prize](http://dx.doi.org/10.1080/09332480.2010.10739787)
+
+
+   
+   
+## Week 7
+
+We used slides from week 6. The lecture was on deep learning and convolutional neural networks.   
+
+Optional reading: 
+
+* Deep Learning by Ian Goodfellow and Yoshua Bengio and Aaron Courville    
+  Book available at: http://www.deeplearningbook.org/    
+  Chapter 9 provide enormous amount of detail.
 
 
 ## Week 6
