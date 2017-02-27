@@ -19,6 +19,8 @@ jester = as(jester, "realRatingMatrix") # convert data so that it can be used by
 
 
 ###read movie data
+download.file("https://github.com/ChicagoBoothML/MLClassData/blob/master/MovieLens1M/ratings.dat?raw=true",
+              "ratings.dat")
 movies = fread("ratings.dat", sep = ":", header = F)
 head(movies)
 movies[, c("V2", "V4", "V6", "V7") := NULL] #because file as :: separators need to kill NA columns
