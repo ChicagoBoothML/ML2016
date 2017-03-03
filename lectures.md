@@ -22,7 +22,8 @@ permalink: /lectures/
 
 ## Week 9
 
-[Auto-encoders](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iz9e9iocmhrgr)
+[Auto-encoders](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iztkc1bqalc13h)   
+[Sequence Modelling](https://piazza.com/class_profile/get_resource/ixiudyq1m7bj0/iztkccl1yt3534)
 
 Optional reading: 
 
